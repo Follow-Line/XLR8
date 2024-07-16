@@ -1,0 +1,17 @@
+int qtdFitas = 0;
+int maxPWM = 150;
+
+// Mapeamento fitas na esquerda
+  if(qtdFitas==10){//Area perigosa - inicio do primeiro S
+    maxPWM = 110;
+  }else if(qtdFitas==13){//Primeira reta
+    maxPWM = 150;
+  }else if(qtdFitas==21){//Fim da primeira reta
+    if(maxPWM>100){
+        maxPWM = maxPWM-10;
+    }
+  }else if(qtdFitas==30){//segunda reta
+    if(maxPWM<200){
+      maxPWM = maxPWM+5;
+    }
+  }

@@ -1,0 +1,103 @@
+----------------------------------------------------------
+  // Incremento da velocidade
+  if(position>40 && position<60){
+    if(speedFinal<speedBoost){
+      speedFinal = speedFinal+0.1;
+    }
+  }else{
+    speedFinal = speedBase;
+  }
+
+----------------------------------------------------------
+// ANTIGO
+// Mapeamento fitas na esquerda
+  if(auxDaVitoria==55){
+    if(speedFinal<40){
+      speedFinal = speedFinal+5;
+    }
+  }else if(auxDaVitoria==57){
+     if(speedFinal<40){
+      speedFinal = speedFinal+5;
+    }
+  }else if(auxDaVitoria==72){
+     if(speedFinal<70){
+      speedFinal = speedFinal+5;
+    }
+  }else if(auxDaVitoria==74){
+     if(speedFinal<70){
+      speedFinal = speedFinal+5;
+    }
+  }
+
+----------------------------------------------------------
+// NOVO
+
+//Vairaveis importantes para o mapeamento de fitas
+int qtdFitas = 0;
+int maxPWM = 150;
+
+// Mapeamento fitas na esquerda
+  if(qtdFitas==10){//Area perigosa - inicio do primeiro S
+    if(maxPWM>120){
+        maxPWM = maxPWM-10;
+    }
+  }else if(qtdFitas==13){//fim da area perigosa
+    maxPWM = 150;
+  }else if(qtdFitas==21){//Area muito perigosa
+    if(maxPWM>100){
+        maxPWM = maxPWM-10;
+    }
+  }else if(qtdFitas==30){//Fim area perigosa
+    if(maxPWM<200){
+      maxPWM = maxPWM+5;
+    }
+  }
+
+----------------------------------------------------------
+
+// Incremento da velocidade e Boost
+  if(position>40 && position<60){
+    if(speedFinal<speedBoost){
+      speedFinal = speedFinal+0.5;      
+    }
+
+    if(contMilli[0]==0){
+      contMilli[0] = millis();
+    }else{
+      contMilli[1] = millis();
+    }
+    
+    if(contMilli[1]-contMilli[0]>=TempoDaSalvacao && speedFinal<70 && TempoDaSalvacao!=10000){
+      speedFinal = speedFinal + 5;
+    }
+    
+  }else{
+    speedFinal = speedBase;
+    contMilli[0]=0;
+    contMilli[1]=0;
+  }
+
+----------------------------------------------------------
+
+// Redução geral de velocidade
+  int controleLimite = 200;
+  
+  speedRight = map(speedRight, 0, 100, 0, controleLimite);
+  speedLeft  = map(speedLeft,  0, 100, 0, controleLimite);
+
+  //Atribui as velocidades aos motores
+  motorLeft.drive(speedLeft);
+  motorRight.drive(speedRight);  
+
+----------------------------------------------------------
+
+// Mapeamento por tempo
+
+/* A ideia é mudar o valor da variável maxPWM que controla o valor maximo da regra de 3.
+ Começa no tempo 0. No segundo 10 o seguidor chega em uma area perigosa então o maxPWM será igual a 120. No segundo/tempo 20 a area perigosa acaba e o maxPWM volta pra 150. 
+*/
+
+//Vairaveis importantes para o mapeamento por tempo
+int maxPWM = 150;
+
+

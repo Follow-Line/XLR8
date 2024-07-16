@@ -1,0 +1,20 @@
+
+int primeiraZonaLenta = 10000;
+int primeiraZonaRapida = 15000;
+int SegundaZonaLenta = 25000;
+
+    if(contMilliMap[0]==0){
+        contMilliMap[0] = millis();
+    }else{
+        contMilliMap[1] = millis();
+    }
+
+    if(contMilliMap[1]-contMilliMap[0]>= 0 && contMilliMap[1]-contMilliMap[0] <= primeiraZonaLenta){
+        speedBase = 30;
+    }else if(contMilliMap[1]-contMilliMap[0]>= primeiraZonaLenta && contMilliMap[1]-contMilliMap[0] <= primeiraZonaRapida){
+        speedBase = 40;
+    }else if(contMilliMap[1]-contMilliMap[0]>= primeiraZonaRapida && contMilliMap[1]-contMilliMap[0] <= SegundaZonaLenta){
+        speedBase = 30;
+    }
+
+    //Lembrar de zerar o contMilliMap[0] quando o seguidor terminar a volta
